@@ -61,7 +61,9 @@ void Painter::renderSymbol(PaintParameters& parameters,
         SpriteAtlas& atlas = *layer.impl->spriteAtlas;
         const bool iconScaled = values.paintSize != 1.0f || frame.pixelRatio != atlas.getPixelRatio() || bucket.iconsNeedLinear;
         const bool iconTransformed = values.rotationAlignment == AlignmentType::Map || state.getPitch() != 0;
-        atlas.bind(bucket.sdfIcons || state.isChanging() || iconScaled || iconTransformed, context, 0);
+        const bool linearInterpolation =
+            bucket.sdfIcons || state.isChanging() || iconScaled || iconTransformed;
+        atlas.bind(linearInterpolation, context, 0);
 
         const Size texsize = atlas.getSize();
 
@@ -81,9 +83,9 @@ void Painter::renderSymbol(PaintParameters& parameters,
             }
         } else {
             draw(parameters.programs.symbolIcon,
-                 SymbolIconProgram::uniformValues(values, texsize, pixelsToGLUnits, tile, state),
-                 bucket.icon,
-                 values);
+                 SymbolIconProgram::uniformValues(values, texsize, !linearInterpolation,
+                                                  pixelsToGLUnits, tile, state),
+                 bucket.icon, values);
         }
     }
 

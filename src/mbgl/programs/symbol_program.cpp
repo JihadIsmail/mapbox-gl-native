@@ -12,6 +12,7 @@ static_assert(sizeof(SymbolAttributes::Vertex) == 16, "expected SymbolVertex siz
 template <class Values, class...Args>
 Values makeValues(const style::SymbolPropertyValues& values,
                   const Size& texsize,
+                  const bool nearest,
                   const std::array<float, 2>& pixelsToGLUnits,
                   const RenderTile& tile,
                   const TransformState& state,
@@ -38,6 +39,7 @@ Values makeValues(const style::SymbolPropertyValues& values,
         uniforms::u_opacity::Value{ values.opacity },
         uniforms::u_extrude_scale::Value{ extrudeScale },
         uniforms::u_texsize::Value{ std::array<float, 2> {{ float(texsize.width) / 4, float(texsize.height) / 4 }} },
+        uniforms::u_nearest::Value{ nearest },
         uniforms::u_zoom::Value{ float((state.getZoom() - zoomAdjust) * 10) },
         uniforms::u_rotate_with_map::Value{ values.rotationAlignment == AlignmentType::Map },
         uniforms::u_texture::Value{ 0 },
@@ -49,6 +51,7 @@ Values makeValues(const style::SymbolPropertyValues& values,
 SymbolIconProgram::UniformValues
 SymbolIconProgram::uniformValues(const style::SymbolPropertyValues& values,
                                  const Size& texsize,
+                                 const bool nearest,
                                  const std::array<float, 2>& pixelsToGLUnits,
                                  const RenderTile& tile,
                                  const TransformState& state)
@@ -56,6 +59,7 @@ SymbolIconProgram::uniformValues(const style::SymbolPropertyValues& values,
     return makeValues<SymbolIconProgram::UniformValues>(
         values,
         texsize,
+        nearest,
         pixelsToGLUnits,
         tile,
         state
@@ -82,6 +86,7 @@ static SymbolSDFProgram::UniformValues makeSDFValues(const style::SymbolProperty
     return makeValues<SymbolSDFProgram::UniformValues>(
         values,
         texsize,
+        false, // nearest
         pixelsToGLUnits,
         tile,
         state,
