@@ -197,6 +197,34 @@ void MapWindow::keyPressEvent(QKeyEvent *ev)
             m_map->setLayoutProperty("road-label-small", "text-size", 30.0);
         }
         break;
+    case Qt::Key_K: {
+            if (!m_sourceAdded) {
+                return;
+            }
+
+            static bool alternateSource;
+            alternateSource = !alternateSource;
+
+            const char* sourceName;
+
+            if (alternateSource) {
+                sourceName = ":source2.geojson";
+            } else {
+                sourceName = ":source.geojson";
+            }
+
+            QFile geojson(sourceName);
+            geojson.open(QIODevice::ReadOnly);
+
+            // The data source for the route line and markers
+            QVariantMap routeSource;
+            routeSource["type"] = "geojson";
+            routeSource["data"] = geojson.readAll();
+
+            m_map->removeSource("routeSource");
+            m_map->addSource("routeSource", routeSource);
+        }
+        break;
     case Qt::Key_Tab:
         m_map->cycleDebugOptions();
         break;

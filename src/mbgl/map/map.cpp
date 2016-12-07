@@ -850,6 +850,8 @@ void Map::addSource(std::unique_ptr<style::Source> source) {
         impl->styleMutated = true;
         impl->style->addSource(std::move(source));
     }
+
+    impl->onUpdate(Update::RecalculateStyle);
 }
 
 std::unique_ptr<Source> Map::removeSource(const std::string& sourceID) {
@@ -857,6 +859,9 @@ std::unique_ptr<Source> Map::removeSource(const std::string& sourceID) {
         impl->styleMutated = true;
         return impl->style->removeSource(sourceID);
     }
+
+    impl->onUpdate(Update::RecalculateStyle);
+
     return nullptr;
 }
 
