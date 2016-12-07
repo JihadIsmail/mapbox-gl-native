@@ -3,7 +3,10 @@ package com.mapbox.mapboxsdk.maps.widgets;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.IntRange;
+import android.support.annotation.NonNull;
 
+import com.mapbox.mapboxsdk.camera.CameraPosition;
+import com.mapbox.mapboxsdk.maps.MapboxMapOptions;
 import com.mapbox.mapboxsdk.maps.Projection;
 import com.mapbox.mapboxsdk.maps.TrackingSettings;
 
@@ -68,6 +71,19 @@ public class MyLocationViewSettings {
         this.projection = projection;
         this.myLocationView = myLocationView;
         this.trackingSettings = trackingSettings;
+    }
+
+    public void initialise(@NonNull MapboxMapOptions options) {
+        CameraPosition position = options.getCamera();
+        if (position != null && !position.equals(CameraPosition.DEFAULT)) {
+            setTilt(position.tilt);
+        }
+        setForegroundDrawable(options.getMyLocationForegroundDrawable(), options.getMyLocationForegroundBearingDrawable());
+        setForegroundTintColor(options.getMyLocationForegroundTintColor());
+        setBackgroundDrawable(options.getMyLocationBackgroundDrawable(), options.getMyLocationBackgroundPadding());
+        setBackgroundTintColor(options.getMyLocationBackgroundTintColor());
+        setAccuracyAlpha(options.getMyLocationAccuracyAlpha());
+        setAccuracyTintColor(options.getMyLocationAccuracyTintColor());
     }
 
     /**
