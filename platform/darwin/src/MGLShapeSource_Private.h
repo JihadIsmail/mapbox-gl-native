@@ -1,9 +1,9 @@
-#import "MGLGeoJSONSource.h"
-#import "MGLGeoJSONSource_Private.h"
+#import "MGLShapeSource.h"
+#import "MGLShapeSource_Private.h"
 
 #include <mbgl/style/sources/geojson_source.hpp>
 
-@interface MGLGeoJSONSource (Private)
+@interface MGLShapeSource (Private)
 
 - (mbgl::style::GeoJSONOptions)geoJSONOptions;
 

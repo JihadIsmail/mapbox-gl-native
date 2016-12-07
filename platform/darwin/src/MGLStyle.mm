@@ -19,7 +19,7 @@
 #import "MGLSource.h"
 #import "MGLVectorSource.h"
 #import "MGLRasterSource.h"
-#import "MGLGeoJSONSource.h"
+#import "MGLShapeSource.h"
 
 #include <mbgl/util/default_styles.hpp>
 #include <mbgl/sprite/sprite_image.hpp>
@@ -167,7 +167,7 @@ static NSURL *MGLStyleURL_emerald;
     if (mbglSource->is<mbgl::style::VectorSource>()) {
         source = [[MGLVectorSource alloc] initWithIdentifier:identifier];
     } else if (mbglSource->is<mbgl::style::GeoJSONSource>()) {
-        source = [[MGLGeoJSONSource alloc] initWithIdentifier:identifier];
+        source = [[MGLShapeSource alloc] initWithIdentifier:identifier];
     } else if (mbglSource->is<mbgl::style::RasterSource>()) {
         source = [[MGLRasterSource alloc] initWithIdentifier:identifier];
     } else {

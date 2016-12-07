@@ -8,38 +8,38 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol MGLFeature;
 
 /**
- Options for `MGLGeoJSONSource` objects.
+ Options for `MGLShapeSource` objects.
  */
-typedef NSString *MGLGeoJSONSourceOption NS_STRING_ENUM;
+typedef NSString *MGLShapeSourceOption NS_STRING_ENUM;
 
 /**
  An `NSNumber` object containing a Boolean enabling or disabling clustering.
  If the `features` property contains point features, setting this option to
  `YES` clusters the points by radius into groups. The default value is `NO`.
  */
-extern const MGLGeoJSONSourceOption MGLGeoJSONSourceOptionClustered;
+extern const MGLShapeSourceOption MGLShapeSourceOptionClustered;
 
 /**
  An `NSNumber` object containing an integer; specifies the radius of each
  cluster if clustering is enabled. A value of 512 produces a radius equal to
  the width of a tile. The default value is 50.
  */
-extern const MGLGeoJSONSourceOption MGLGeoJSONSourceOptionClusterRadius;
+extern const MGLShapeSourceOption MGLShapeSourceOptionClusterRadius;
 
 /**
  An `NSNumber` object containing an integer; specifies the maximum zoom level at
  which to cluster points if clustering is enabled. Defaults to one zoom level 
- less than the value of `MGLGeoJSONSourceOptionMaximumZoomLevel` so that, at the
+ less than the value of `MGLShapeSourceOptionMaximumZoomLevel` so that, at the
  maximum zoom level, the features are not clustered.
  */
-extern const MGLGeoJSONSourceOption MGLGeoJSONSourceOptionMaximumZoomLevelForClustering;
+extern const MGLShapeSourceOption MGLShapeSourceOptionMaximumZoomLevelForClustering;
 
 /**
  An `NSNumber` object containing an integer; specifies the maximum zoom level at
  which to create vector tiles. A greater value produces greater detail at high
  zoom levels. The default value is 18.
  */
-extern const MGLGeoJSONSourceOption MGLGeoJSONSourceOptionMaximumZoomLevel;
+extern const MGLShapeSourceOption MGLShapeSourceOptionMaximumZoomLevel;
 
 /**
  An `NSNumber` object containing an integer; specifies the size of the tile
@@ -47,14 +47,14 @@ extern const MGLGeoJSONSourceOption MGLGeoJSONSourceOptionMaximumZoomLevel;
  buffer as wide as the tile itself. Larger values produce fewer rendering 
  artifacts near tile edges and slower performance. The default value is 128.
  */
-extern const MGLGeoJSONSourceOption MGLGeoJSONSourceOptionBuffer;
+extern const MGLShapeSourceOption MGLShapeSourceOptionBuffer;
 
 /**
  An `NSNumber` object containing a double; specifies the Douglas-Peucker
  simplification tolerance. A greater value produces simpler geometries and
  improves performance. The default value is 0.375.
  */
-extern const MGLGeoJSONSourceOption MGLGeoJSONSourceOptionSimplificationTolerance;
+extern const MGLShapeSourceOption MGLShapeSourceOptionSimplificationTolerance;
 
 /**
  A GeoJSON source.
@@ -62,7 +62,7 @@ extern const MGLGeoJSONSourceOption MGLGeoJSONSourceOptionSimplificationToleranc
  @see <a href="https://www.mapbox.com/mapbox-gl-style-spec/#sources-geojson">The
     style specification.</a>
  */
-@interface MGLGeoJSONSource : MGLSource
+@interface MGLShapeSource : MGLSource
 
 #pragma mark Initializing a Source
 
@@ -77,7 +77,7 @@ extern const MGLGeoJSONSourceOption MGLGeoJSONSourceOptionSimplificationToleranc
  @param options An `NSDictionary` of options for this source.
  @return An initialized GeoJSON source.
  */
-- (instancetype)initWithIdentifier:(NSString *)identifier geoJSONData:(NSData *)data options:(nullable NS_DICTIONARY_OF(MGLGeoJSONSourceOption, id) *)options NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithIdentifier:(NSString *)identifier geoJSONData:(NSData *)data options:(nullable NS_DICTIONARY_OF(MGLShapeSourceOption, id) *)options NS_DESIGNATED_INITIALIZER;
 
 /**
  Returns a GeoJSON source with an identifier, URL, and dictionary of options for
@@ -91,7 +91,7 @@ extern const MGLGeoJSONSourceOption MGLGeoJSONSourceOptionSimplificationToleranc
  @param options An `NSDictionary` of options for this source.
  @return An initialized GeoJSON source.
  */
-- (instancetype)initWithIdentifier:(NSString *)identifier URL:(NSURL *)url options:(nullable NS_DICTIONARY_OF(MGLGeoJSONSourceOption, id) *)options NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithIdentifier:(NSString *)identifier URL:(NSURL *)url options:(nullable NS_DICTIONARY_OF(MGLShapeSourceOption, id) *)options NS_DESIGNATED_INITIALIZER;
 
 /**
  Returns a GeoJSON source with an identifier, features dictionary, and dictionary
@@ -104,7 +104,7 @@ extern const MGLGeoJSONSourceOption MGLGeoJSONSourceOptionSimplificationToleranc
  @param options An `NSDictionary` of options for this source.
  @return An initialized GeoJSON source.
  */
-- (instancetype)initWithIdentifier:(NSString *)identifier shape:(nullable MGLShape *)shape options:(nullable NS_DICTIONARY_OF(MGLGeoJSONSourceOption, id) *)options NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithIdentifier:(NSString *)identifier shape:(nullable MGLShape *)shape options:(nullable NS_DICTIONARY_OF(MGLShapeSourceOption, id) *)options NS_DESIGNATED_INITIALIZER;
 
 #pragma mark Accessing a Source’s Content
 
