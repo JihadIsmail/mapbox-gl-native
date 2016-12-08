@@ -42,4 +42,10 @@ NS_DICTIONARY_OF(NSString *, id) *NSDictionaryFeatureForGeometry(NSDictionary *g
 
 @end
 
+@protocol MGLFeatureCollectionPrivate <NSObject>
+
+- (mbgl::FeatureCollection)mbglFeatureCollection;
+
+@end
+
 NS_ASSUME_NONNULL_END

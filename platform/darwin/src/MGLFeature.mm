@@ -149,7 +149,7 @@
 
 @end
 
-@interface MGLShapeCollectionFeature () <MGLFeaturePrivate>
+@interface MGLShapeCollectionFeature () <MGLFeaturePrivate, MGLFeatureCollectionPrivate>
 @end
 
 @implementation MGLShapeCollectionFeature
@@ -175,6 +175,18 @@
     [NSException raise:@"Method unavailable" format:@"%s is not available on %@.", __PRETTY_FUNCTION__, [self class]];
     mbgl::Polygon<double> geometry;
     return mbgl::Feature{geometry};
+}
+
+- (mbgl::FeatureCollection)mbglFeatureCollection {
+    mbgl::FeatureCollection featureCollection;
+    featureCollection.reserve(self.shapes.count);
+    for (id <MGLFeaturePrivate> feature in self.shapes) {
+        if ([feature isMemberOfClass:[MGLShapeCollectionFeature class]]) {
+            featureCollection.push_back([self mbglFeatureCollection]);
+        }
+        featureCollection.push_back([feature mbglFeature]);
+    }
+    return featureCollection;
 }
 
 @end

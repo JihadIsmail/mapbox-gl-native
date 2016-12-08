@@ -93,8 +93,15 @@ const MGLGeoJSONSourceOption MGLGeoJSONSourceOptionSimplificationTolerance = @"M
         source->setGeoJSON(geojson);
         _shape = MGLShapeFromGeoJSON(geojson);
     } else {
-        const auto geojson = mbgl::GeoJSON{self.shape.geometryObject};
-        source->setGeoJSON(geojson);
+        if ([self.shape isMemberOfClass:[MGLShapeCollectionFeature class]]) {
+            id<MGLFeatureCollectionPrivate> feature = (id<MGLFeatureCollectionPrivate>)self.shape;
+            source->setGeoJSON(mbgl::GeoJSON{[feature mbglFeatureCollection]});
+        } else if ([self.shape conformsToProtocol:@protocol(MGLFeature)]) {
+            id<MGLFeaturePrivate> feature = (id<MGLFeaturePrivate>)self.shape;
+            source->setGeoJSON(mbgl::GeoJSON{[feature mbglFeature]});
+        } else {
+            source->setGeoJSON(mbgl::GeoJSON{self.shape.geometryObject});
+        }
     }
     
     _pendingSource = std::move(source);
