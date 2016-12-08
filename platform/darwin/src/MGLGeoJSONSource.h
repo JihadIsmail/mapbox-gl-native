@@ -57,10 +57,15 @@ extern const MGLGeoJSONSourceOption MGLGeoJSONSourceOptionBuffer;
 extern const MGLGeoJSONSourceOption MGLGeoJSONSourceOptionSimplificationTolerance;
 
 /**
- A GeoJSON source.
-
- @see <a href="https://www.mapbox.com/mapbox-gl-style-spec/#sources-geojson">The
-    style specification.</a>
+ `MGLGeoJSONSource` is a map source that supplies vector shapes to be shown on
+ the map. The shapes may be instances of `MGLShape` or `MGLFeature`, or they may
+ be defined by local or external <a href="http://geojson.org/">GeoJSON</a> code.
+ A GeoJSON source is added to an `MGLStyle` object along with an
+ `MGLVectorStyleLayer` object. The vector style layer defines the appearance of
+ any content supplied by the GeoJSON source.
+ 
+ Any vector style layer initialized with a GeoJSON source should have a `nil`
+ value in its `sourceLayerIdentifier` property.
  */
 @interface MGLGeoJSONSource : MGLSource
 
